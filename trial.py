@@ -41,7 +41,7 @@ elif choice == "Webcam Face Detection":
         # Check if the frame was successfully read
         if not ret:
             print("Can't receive frame (stream end?). Exiting ...")
-            continue
+            break
         # Convert the frame to grayscale for face detection
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         # Detect faces in the frame
@@ -79,9 +79,9 @@ elif choice == "Webcam Face Detection":
         # Break the loop if 'q' key is pressed
         if cv2.waitKey(10) & 0xFF == ord('q'):
             break
-        # Release the webcam and close all windows
-        cap.release()
-        cv2.destroyAllWindows()
+        # # Release the webcam and close all windows (bug here)
+        # cap.release()
+        # cv2.destroyAllWindows()
 
 elif choice == "About":
     st.subheader("About this app")

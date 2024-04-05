@@ -5,6 +5,19 @@ from tf_keras.preprocessing import image
 import pyttsx3
 import streamlit as st
 
+run = True
+
+
+def stop_loop():
+    global run
+    run = False
+
+
+def start_loop():
+    global run
+    run = True
+
+
 model_best = load_model('face_model.h5')
 engine = pyttsx3.init()
 # Classes 7 emotional states
@@ -36,8 +49,14 @@ if choice == "Home":
              """)
 elif choice == "Webcam Face Detection":
     st.header("Webcam Live Feed")
-    while True:
+    counter = 0
+    st.button(f'Stop', key='Stop', on_click=stop_loop)
+    while (run is True):
         ret, frame = cap.read()
+        if counter == 0:
+            st.button(f'Start', key='Start', on_click=start_loop)
+            counter += 1
+
         # Check if the frame was successfully read
         if not ret:
             print("Can't receive frame (stream end?). Exiting ...")
